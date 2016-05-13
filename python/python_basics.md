@@ -22,20 +22,39 @@
     bool_true = True
     bool_false = False
 
-#### Null Reference: None
+#### Null Reference Keyword: None
     null_reference = None
 
-#### Boolean Operators
-All boolean operators return a boolean value
+#### Comparison / Boolean Operators
+All comparison and boolean operators return a boolean value
 
     a == b
     a != b
+
     a > b
     a >= b
     a < b
     a <= b
-    a == b and a > b
-    a == b or a > b
+
+    a and b
+    a or b
+    a ^ b     # XOR
+
+#### Arithmetic Operators
+    a + b
+    a - b
+    a * b
+    a / b
+    a // b    # floor division
+    a ** b    # power / exponent
+Reassignment versions
+
+    a += b
+    a -= b
+    a *= b
+    a /= b
+    a //= b
+    a **= b
 
 #### If statements
     if expression:
@@ -84,6 +103,12 @@ Similar to lists, except all unique / no duplicate values, and unordered
       return result
 
     called_func(positional_arg1, positional_arg2, optional_arg1=some_val, optional_arg2=some_val)
+
+    def multi_return_func(arg1)
+      # do stuff
+      return r1, r2
+
+    out1, out2 = multi_return_func(some_val)
 
 #### File
     f = open('/filepath', 'r')    # open file, read access

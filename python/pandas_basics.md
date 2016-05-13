@@ -91,6 +91,23 @@ Boolean Series can be used to select / deselect items in a Series (masking)
 #### Checking for NaN values
     boolean_series = pandas.isnull(some_series_object)    # Series values True if null
 
+    n = pandas.count(some_series_object)    # Counts the number of Nan & None values
+
+#### Basic Statistics
+Automatically omit NaN values
+
+    series_object.mean()
+    series_object.median()
+    series_object.var()
+    series_object.std()
+    series_object.skew()
+    series_object.kurtosis()
+
+    series_object.min()
+    series_object.max()
+    series_object.idxmin()    # returns indices of min values
+    series_object.idxmax()    # returns indices of max values
+
 ### DataFrames
 Like Series objects, dataframe rows can be accessed either by position or index
 
@@ -141,6 +158,7 @@ See section on "Setting With Copy" [](http://tomaugspurger.github.io/modern-1.ht
     new_df = dataframe[dataframe['col_name'] != 'unwanted_value']   # drop row by value
 
 #### Apply
+    series_result = series_object.apply(single_arg_func)      # calls on each element
     series_result = dataframe.apply(single_arg_func)          # calls on each column
     series_result = dataframe.apply(single_arg_func, axis=1)  # calls on each row
 
@@ -183,7 +201,3 @@ dataframe.reset_index()
 
     reindexed_df = dataframe.reset_index(drop=True)        # Resets index based on current positions
     dataframe.reset_index(drop=True, inplace=True)         # Inplace version
-
-dataframe.mean()
-
-    scalar_val = dataframe["col"].mean()    # Calculates mean, automatically omits NaN values

@@ -26,6 +26,9 @@ If using IPython notebook / Jupyter, add the following magic command:
     plt.xticks(rotation=90)     # adjusts orientation of x-axis units
     plt.yticks(rotation=90)     # adjusts orientation of y-axis units
 
+#### Vertical Lines
+    plt.axvline(x_val, color='r')
+
 #### Using Styles
     plt.style.use("style_name")
 Good styles

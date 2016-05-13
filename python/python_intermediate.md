@@ -67,6 +67,10 @@ Equivalent verbose expression in loop form
     for elem in some_iterable:
       new_list.append(some_func(elem))
 
+With a conditional
+
+    new_list = [x for x in some_list if x == y]
+
 #### Scoping & Inheritance
 Functions create a local variable scope
 

@@ -4,10 +4,14 @@
 
 #### Import Numpy
     import numpy
+Frequently imported as `np`
 
-#### Arrays
+    import numpy as np
+#### Initializing Arrays
     vector = numpy.array([1,2,3,4])
     matrix = numpy.array([[1,2],[3,4]])
+
+    vector = numpy.arange(x_min, x_max, x_interval)   # Array Range
 
 #### Shape Property
 Outputs dimensions of the array as a tuple
@@ -62,5 +66,14 @@ Boolean arrays (masks) can be used in the index operator to select True elements
     vector.sum()
     vector.mean()
     vector.median()
-    vector.max()
     vector.min()
+    vector.max()
+    vector.argmin()   # returns array of indices of min values
+    vector.argmax()   # returns array of indices of max values
+
+#### More Statistics
+[NumPy Stats Routines](http://docs.scipy.org/doc/numpy/reference/routines.statistics.html)
+
+    numpy.<routine>()
+
+    covariance = numpy.cov(x_vector, y_vector)[0,1]
