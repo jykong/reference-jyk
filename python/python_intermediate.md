@@ -56,6 +56,16 @@ Constructer & method arguments
     for i, item in enumerate(some_list, start=0):
       # do stuff, i will be integer index counter, defaults to count from 0
 
+#### Dictionary Iteration, Items / Iteritems
+Python 3
+
+    for k,v in dict.items():
+      # do stuff
+Python 2
+
+    for k,v in dict.iteritems():
+      # do stuff
+
 #### List Comprehensions
 Compact expression
 
@@ -70,6 +80,16 @@ Equivalent verbose expression in loop form
 With a conditional
 
     new_list = [x for x in some_list if x == y]
+
+#### Random Number Generation
+    import random
+    random.seed(seed_value)
+    random.randint(x_min, x_max)
+    random.random()       # returns random float between 0-1
+    random.uniform(a,b)   # returns random float between a-b
+    random.sample(sequence, n_samples)
+
+    [random.randint(0,10) for _ in range(20)]   # list of 20 random ints between 0-10
 
 #### Scoping & Inheritance
 Functions create a local variable scope

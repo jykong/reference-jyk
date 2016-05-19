@@ -77,6 +77,13 @@ Similar to lists, except all unique / no duplicate values, and unordered
     new_set.add("item")
     new_set.remove("item")
 
+#### Tuples
+Similar to lists, except immutable (ordered)
+
+    new_tuple = ()
+    new_tuple = (10,11,12)
+    ten = new_tuple[0]
+
 #### Dictionaries
     empty_dict = {}
     dict = {
@@ -127,11 +134,17 @@ Similar to lists, except all unique / no duplicate values, and unordered
       # iterates over some_list, actually some Iterable
 
     for i in range(0,10):
-      # do stuff
+      # do stuff, 10 times
       # simple counter based loop
 
+    for i in range(10):
+      # same as above, one argument range assumes initial value of 0
+
+    for i in range(0, 20, 2)
+      # step size of 2
+
     for i in xrange(0,10):
-      # only for Python 2 !!!, Python 3 just uses range
+      # only for Python 2 !!!, Python 3 just uses range()
       # functionally same as using range, except doesn't create a list
       # more efficient
 
@@ -139,3 +152,7 @@ Similar to lists, except all unique / no duplicate values, and unordered
       # .items() outputs the dictionary as a list of tuple pairs
       # using items() iterates over keys and values simultaneously
       # easier to use v instead some_dict[k] repeatedly
+
+    list_of_tuples = [(1,2,3),(100,200,300),(0,1,1)]
+    for x,y,z in list_of_tuples:
+      # do stuff with x,y,z

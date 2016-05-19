@@ -5,6 +5,9 @@
 
     multi_col_pivot_table = dataframe.pivot_table(index="col_name_to_segment_by", values=["col1","col2"], aggfunc=some_func)
 
+#### Crosstab
+    table = pandas.crosstab(dataframe['col_as_index'], [dataframe['col1'], dataframe['col2']])
+
 ### Plotting
 Generic catch-all method
 
