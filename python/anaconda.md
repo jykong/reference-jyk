@@ -8,6 +8,9 @@ via command line
 
     python -V
 
+#### Update packages
+    conda update --all
+
 #### List current environments
 [](http://conda.pydata.org/docs/using/envs.html#list-all-environments)
 

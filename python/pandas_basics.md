@@ -133,7 +133,19 @@ dataframe.loc[] - get [row,col] by index
     dataframe["col_name"]         # outputs the column matching "col_name"
     dataframe[["col1", "col2"]]   # outputs multiple columns
 
-#### Adding / Modifying Dataframe Columns
+#### Selecting Dataframe Rows by Boolean Series
+    filtered_dataframe = dataframe[bool_data_series]
+
+Comparison operations on a series object will return a boolean series
+
+    filtered_dataframe = dataframe[dataframe['col1'] == some_value]
+
+Use `.isin` to match against multiple values
+
+    target_values = ['val1', 'val2']
+    filtered_dateframe = dataframe[dataframe['col1'].isin(target_values)]
+
+#### Adding / Replacing Entire Dataframe Columns
     dataframe["new_col_name"] = some_series_object
     dataframe["existing_col_name"] = some_series_object
 
@@ -150,7 +162,27 @@ First, `dateframe["col1"]` initiates a `__getitem__` call that may return a copy
 See section on "Setting With Copy" [](http://tomaugspurger.github.io/modern-1.html)
 
 #### Force Copy
+Force copy often fixes the chained indexing problem
+
     new_df = pandas.DataFrame(dataframe)    # call constructor
+
+#### Modifying Values
+Iterates over each element in the series/dataframe
+
+    replace_dict = {
+      'old_value1': new_value1,
+      'old_value2': 'new_value2'
+    }
+    new_dataframe = dataframe['col1'].map(replace_dict)
+
+#### Renaming Columns
+Similar to `.map`
+
+    replace_dict = {
+      'old_col1': 'new_col1',
+      'old_col2': 'new_col2'
+    }
+    new_dataframe = dataframe.rename(index=str, columns=replace_dict)
 
 #### Dropping Rows / Columns
     new_df = dataframe.drop('row_index')                            # drop row by index
@@ -172,32 +204,48 @@ See section on "Setting With Copy" [](http://tomaugspurger.github.io/modern-1.ht
 #### Sorting Dataframes
 Sort defaults to outputig a new dataframe. Use inplace to modify existing dataframe.
 
-    dataframe.sort("col_to_sort_by", inplace=True, ascending=False)
-
-#### Custom Index
-Drop current index and use a specified column as the index instead.
-
-    reindexed_df = dataframe.set_index("col_name", inplace=False, drop=True)
+    dataframe.sort_values("col_to_sort_by", inplace=True, ascending=False)
 
 #### Data Types
     dataframe.dtypes
 
-    * object (String)
-    * int
-    * float
-    * datetime
-    * bool
+* object (String)
+* int
+* float
+* datetime
+* bool
+
+Cast series as a data type
+
+    new_series = series_object.astype(<data_type>)
 
 #### Handling NaN values
-dataframe.dropna()
+Filter rows *not containing* NaN values
+
+    filtered_notnull_rows = dataframe[pandas.notnull(dataframe['col1'])]
+
+Extract rows *containing* NaN values
+
+    extracted_null_rows = dataframe[pandas.isnull(dataframe['col1'])]
+
+Drop rows containing NaN values
 
     new_dataframe = dataframe.dropna()        # Drop all rows with NaN values
     new_dataframe = dataframe.dropna(axis=1)  # Drop all columns with NaN values
     new_dataframe = dataframe.dropna(subset=["col1", "col2"])   # Drop all rows with NaN in col1 and col2
 
-#### Other Useful Functions
+Fill rows containing NaN values with another value
+
+    new_dataframe = dataframe.fillna(new_value)
+
+#### Reset Index
 
 dataframe.reset_index()
 
     reindexed_df = dataframe.reset_index(drop=True)        # Resets index based on current positions
     dataframe.reset_index(drop=True, inplace=True)         # Inplace version
+
+#### Custom Index
+Drop current index and use a specified column as the index instead.
+
+    reindexed_df = dataframe.set_index("col_name", inplace=False, drop=True)
