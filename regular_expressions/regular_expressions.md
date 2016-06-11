@@ -44,7 +44,15 @@ To use special characters (i.e. .^$[]), use the \ as an escape character
     matches: "catfish", "doggie", "hotdog"
     does not match: "dot", "goat"
 
-#### Repeating Expressions: {}
+#### N-times Repeating Expressions: {}
     "[0-9]{5}"
     matches: "00000", "29104"
     does not match: "0", "9234234"
+
+#### Infinite Repeating Expressions: *
+    ".*"
+    matches everything!
+
+    "[0-9a-z]*"
+    matches: "somanyrun0nw0rd5"
+    does not match: " ", "\n", "\t"

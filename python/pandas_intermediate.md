@@ -1,4 +1,5 @@
 ## Intermediate Pandas Reference
+    import pandas as pd
 
 #### Transpose
 Swaps rows & columns
@@ -17,6 +18,26 @@ Python-like string manipulation & regex
 
 See [docs](http://pandas.pydata.org/pandas-docs/stable/text.html#method-summary) for a full list
 
+#### Split-Apply-Combine: Group By, Aggregate
+`groupby()` split sorts the dataframe by grouping the same values of the specified column
+
+    grouped_df = dataframe.groupby('col1')
+
+Grouped dataframes can be iterated over. Each iteration returns a subset of the original dataframe keyed on on the `groupby()` column
+
+    for group_df in grouped_df:
+      # do stuff with group_df dataframe
+
+`aggregate()` combines / reduces rows of each non-keyed column into a single value based on a specified function, keyed on the `groupby()` column
+
+    sums = grouped_df.aggregate(sum)
+    counts = grouped_df.aggregate(len)
+
+#### Split Value Categories Into Binary Columns
+Binary columns named using `prefix` + `str(value)`. i.e. values via `value_counts()`
+
+    binary_cols_df = pd.get_dummies(dataframe['col1'], prefix='binary_cols_prefix')
+
 #### Correlations
 Compute pairwise correlations / r-values
 
@@ -30,7 +51,9 @@ Segments aggregation across specified index labels
     multi_col_pivot_table = dataframe.pivot_table(index="col_name_to_segment_by", values=["col1","col2"], aggfunc=some_func)
 
 #### Crosstab
-    table = pandas.crosstab(dataframe['col_as_index'], [dataframe['col1'], dataframe['col2']])
+Groups results into NxN matrix segments. Defaults to frequency counting unless an `aggfunc` is supplied.
+
+    table = pd.crosstab(dataframe['col_as_index'], [dataframe['col1'], dataframe['col2']])
 
 #### Fast operations over row elements
 Fastest to slowest:

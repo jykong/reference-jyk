@@ -9,7 +9,13 @@ Most of the use features matplotlib are in the pyplot module.
 If using IPython notebook / Jupyter, add the following magic command:
 
     %matplotlib inline
-[](http://ipython.readthedocs.io/en/stable/interactive/magics.html?commands#magic-matplotlib)
+
+[Jupyter Magics](http://ipython.readthedocs.io/en/stable/interactive/magics.html?commands#magic-matplotlib)
+
+To adjust the default figure size in IPython notebook / Jupyter:
+
+    plt.rcParams['figure.figsize'] = (14, 12)
+
 
 #### Common Graphs
     plt.scatter(x_var, y_var)   # scatter
@@ -65,6 +71,12 @@ Axes contain the contents (data, ticks, units, and labels) for any given subplot
     ax.set_xlabel("X values")
     ax.scatter(x_var, y_var, color='darkblue', marker='o')
     plt.show()
+
+#### Projections
+`gca()` - Get Current Axes
+
+    ax = plt.gca(projection='polar')
+    ax = plt.gca(projection='3d')
 
 ### Seaborn
 Seaborn is a Python library supported by Stanford University that enables you to create beautiful, presentation-ready data visualizations. While Seaborn uses Matplotlib under the hood to represent, manipulate, and customize plots, it exposes a high-level API that abstracts away a lot of the internal Matplotlib logic.
@@ -127,3 +139,25 @@ Adding great circle curves
 Use pyplot to customize and display the map
 
     plt.show()
+
+### Vectors
+X, Y, U, and V have length equal to the number of vectors to draw
+
+    plt.quiver(X, Y, U, V, angles='xy', scale_units='xy', scale=1)
+
+X, Y: (x,y) origins
+
+U, V: (dx, dy) displacements
+
+Example: 3 vectors ending up at (6,6)
+
+    X = [0, 1, 3]
+    Y = [0, 3, 5]
+    U = [1, 2, 3]
+    V = [3, 2, 1]
+
+### 3D
+    from mpl_toolkits.mplot3d import Axes3D
+
+    ax = fig.gca(projection='3d')
+    ax.plot_surface(X, Y, Z)

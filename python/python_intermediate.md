@@ -10,35 +10,58 @@
     pack_alias.func()
     copy_var = pack_alias.var
 
+#### Run from command line
+    if __name__ == "__main__":
+      # do stuff
+
+    import sys
+    if __name__ == "__main__":
+      print(sys.argv[1])
+      print(sys.environ["SOME_VARIABLE"])
+
 #### Classes
 Defining a new class
 
-    class SomeClass()
-      def __init__(self):
-        self.property_name = default_value
+    class SomeClass():
+      def __init__(self, arg):
+        self.property1 = default_value
+        self.property2 = arg
 
-      def some_method(self):
-        # do stuff with self.property_name
+      def some_instance_method(self):
+        # do stuff with self.property1 & self.property2
         return result
+
+      @classMethod
+      def some_class_method(self, arg):
+        # do stuff
+        return result
+
+First argument of instance & class methods is always `self`
 
 Creating an instance & using property / methods
 
-    new_object = SomeClass()
+    new_object = SomeClass(some_constructor_value)
     new_object.property_name
-    new_object.some_method()
+    new_object.some_instance_method()
+    SomeClass.some_class_method(some_value)
 
-Constructer & method arguments
+#### Inheritance
+All classes inherit the `object` class by default
 
-    class SomeClass()
-      def __init__(self, arg):
-        self.property_name = arg
+    class SomeChildClass(ParentClass):
+      ...
 
-    def some_method(self, arg):
-      # do stuff with self & arg
-      return result
+##### Function / Operator Overloading
+Parent functions can be overloaded by having the child class define the function
 
-    new_object = SomeClass(some_value)
-    new_object.some_method(some_other_value)
+Operators can be overloaded by defining their special function names
+
+    __lt__(self, other):  # <
+    __gt__(self, other):  # >
+    __le__(self, other):  # <=
+    __ge__(self, other):  # >=
+    __eq__(self, other):  # ==
+    __ne__(self, other):  # !=
 
 #### Error Handling: Try/Except
     try:
@@ -80,6 +103,26 @@ Equivalent verbose expression in loop form
 With a conditional
 
     new_list = [x for x in some_list if x == y]
+
+#### Map
+    new_list = list(map(some_func, some_iterable))
+
+`map` applies `some_func` to each element of `some_iterable` and then outputs the results via an iterable object
+
+#### Filter
+    new_list = list(map(some_boolean_func, some_iterable))
+
+`filter` evaluates each element of `some_iterable` with `some_func` and outputs the elements that evaluate to `True` via an iterable object
+
+#### Lambda Functions
+One-time, anonymous functions
+
+    lambda x,y: x+y
+
+Equivalent to:
+
+    def add_args(x,y):
+      return x+y
 
 #### Random Number Generation
     import random
@@ -127,6 +170,13 @@ Built-in functions can be overwritten
     re.sub("string", "replacement", "no_match")       # returns "no_match"
     re.findall("[str]", "some_string")                # returns ["s","s","t","r"]
 
+#### Measuring Performance Time
+    import time
+Use `perf_counter()` for user process + system time (incl. sleep). Use `process_time()` for user process time only. `clock()` is deprecated since 3.3.
+
+    before = time.process_time()
+    # some task
+    after = time.process_time()
 #### Timestamps
 A Unix timestamp is a simple floating point value, with no explicit mention of day, month, or year. This floating point value represents the number of seconds that have passed since the epoch. The epoch is the first second of the year 1970. So, a timestamp of 0.0 would represent the epoch, and a timestamp of 60.0 would represent one minute after the epoch.
 
@@ -186,6 +236,38 @@ Parse input string
     dt = datetime.datetime.strptime("%b %d, %Y", "May 4, 2010")
 [strftime & strptime documentation](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior)
 
+#### Memory Inspection
+Get variable's memory address
+
+    id(some_var)
+Get variable's memory size (in bytes)
+
+    import sys
+    sys.getsizeof(some_var)
+
+#### Base Conversion
+##### Ordinals
+    ascii_integer_value = ord('c')
+    unicode_integer_value_256 = ord("\u0100")   # unicode is encoded in hex
+
+##### Hex Values
+    some_hex_str = "FF"
+    hex_str_value = hex(some_int)
+    base10_value255 = int(some_hex_str, 16)
+
+##### Binary Values
+    some_binary_string = "10001"
+    bin_str_value = bin(some_int)
+    base10_value257 = int(some_binary_string, 2)
+
+#### Counter object
+Use the Counter object to obtain sorted frequency counts
+
+    from collections import Counter
+
+    counter_object = Counter(some_list)
+    top5_most_common_items = counter_object.most_common(5)
+
 #### Command Line / IDLE shell
 Launch IDLE from terminal command line
 
@@ -200,3 +282,31 @@ From IDLE:
     subprocess.check_output(['python', 'script.py'])  # Display the stdout
 
     exit()                    # close IDLE, return to command line
+
+#### Parallel Processing / Multithreading
+    import threading
+
+    some_thread = threading.Thread(target=some_func, args=[arg1, arg2])
+    some_thread.start()
+    # do other stuff
+    some_thread.join()    # wait for thread to finish
+
+Mutual Exclusion
+    lock = threading.Lock()
+    lock.acquire()
+    # critical region
+    lock.release()
+
+#### Generators
+Generators are lazy evaluated one-time iterators. Any function definition using `yield` produces a generator definition instead of a normal function definition.
+
+    def like_range(n):
+      i = 0
+      while i != n:
+        yield i
+        i += 1
+
+    for x in like_range(10000):
+      # do stuff
+
+`like_range` performs like the built-in `range` generator. In this case, it does not create a list of 10000 values in memory. Instead, each successive value is generated as the generator function is triggered each time the `for` loop is executed.

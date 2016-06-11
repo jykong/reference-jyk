@@ -7,7 +7,7 @@ Frequently imported as `pd`
 
     import pandas as pd
 
-#### Reading CSV
+#### Reading In CSV, Outputting CSV
 Reads in CSV as a DataFrame, automatically treating 1st row as header
 
     dataframe = pandas.read_csv("file.csv")
@@ -18,12 +18,18 @@ In case of encoding error, trying a different encoding
 
 [](https://docs.python.org/3/library/codecs.html#standard-encodings)
 
+Output a DataFrame to CSV file
+
+    dataframe.to_csv("file.csv", index=False)
+
 #### Inspecting Dataframes
-    dataframe.head(5))    # outputs the first 5 rows
+    dataframe.head()      # outputs the first 5 rows
     dataframe.shape       # outputs the dimensions as a tuple
+    dataframe.dtypes      # outputs the column names + data types
+    dataframe.describe()  # outputs basic summary statistics for numeric value columns
+
     dataframe.columns     # outputs the column headers as an index
     dataframe.index       # outputs the row index
-    dataframe.values      # outputs values as a list
 
 #### Empty Values: NaN
 Empty / null values in a DataFrame or Series are represented with NaN (Not a Number)
@@ -54,16 +60,22 @@ Creating a Series object via Series constructor
     series_object = Series(index=array-like1, data=array-like2)
     # len(array-like1) must be equal to len(array-like2)
 
+#### Inspecting a Series
+    series_object.head()      # outputs the first 5 rows
+    series_object.dtypes      # outputs series name + data type
+    series_object.describe()  # outputs basic summary statistics
+    series_object.value_counts()    # outputs frequency table over each value
+
 #### Manipulating Series
+Outputting the index / values
+
+    index = series_object.index   # same as .keys()
+    values = series_object.values
+    unique_values = series_object.unique()  # includes NA
 
 Converting Series object to dictionary, index -> keys
 
     dict = series_object.to_dict()
-
-Outputting the index / values
-
-    index = series_object.tolist()
-    values = series_object.values
 
 Reindexing
 
@@ -124,6 +136,7 @@ dataframe.iloc[] - get [row,col] by position, sorting / dropping rows may change
 dataframe.loc[] - get [row,col] by index
 
     dataframe.loc["row_index", "col_index"]
+    dataframe.loc[:, 'col11':'col99']    # slice columns by name
 
 [](http://pandas.pydata.org/pandas-docs/stable/indexing.html)
 
@@ -148,6 +161,10 @@ Use `.isin` to match against multiple values
 #### Adding / Replacing Entire Dataframe Columns
     dataframe["new_col_name"] = some_series_object
     dataframe["existing_col_name"] = some_series_object
+
+#### Concatenate Rows / Columns
+    new_df = pandas.concat([dataframe, other_df_rows])
+    new_df = pandas.concat([dataframe, other_df_cols], axis=1)
 
 #### ***WARNING*** about chained indexing
     dataframe["col1"]["col2"] = something   # will throw an warning
@@ -176,7 +193,9 @@ Iterates over each element in the series/dataframe
     new_dataframe = dataframe['col1'].map(replace_dict)
 
 #### Renaming Columns
-Similar to `.map`
+    dataframe.columns = new_column_names
+
+Using replace_dict similar to `.map`
 
     replace_dict = {
       'old_col1': 'new_col1',

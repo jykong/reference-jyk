@@ -67,7 +67,10 @@ Reassignment versions
     new_list = [1, 'str', 0.7]  # declare new_list with values
     new_list[0]                 # first element
     new_list[-1]                # last element
-    new_list[0:5]               # list of first five elements
+    new_list[:5]                # list of first five elements
+    new_list[-5:]               # list of last five elements
+    new_list[1:3]               # list of 2nd and 3rd elements
+    new_list[::2]               # list of all even elements
     new_list.append('item')     # add to the end of the list
 
 #### Sets
@@ -147,6 +150,9 @@ Similar to lists, except immutable (ordered)
       # only for Python 2 !!!, Python 3 just uses range()
       # functionally same as using range, except doesn't create a list
       # more efficient
+
+    for i, v in enumerate(some_list):
+      # do stuff with index and value
 
     for k, v in some_dict.items():
       # .items() outputs the dictionary as a list of tuple pairs
