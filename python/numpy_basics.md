@@ -12,6 +12,9 @@ Frequently imported as `np`
     matrix = np.array([[1,2],[3,4]])
     matrix = np.empty(shape=(100,100))
 
+    1d_row_matrix = np.array([[1,2,3,4]])   # extra [] makes it (4,1) instead of (4,)
+    1d_col_matrix = np.array([[1],[2],[3],[4]])
+
 Linear values
 
     vector = np.linspace(x_min, x_max, n_samples)
@@ -20,8 +23,14 @@ Linear values
 #### Shape Property
 Outputs dimensions of the array as a tuple
 
-    tuple_result = vector.shape
-    tuple_result = matrix.shape
+    tuple_result = vector.shape     # (x,)
+    tuple_result = matrix.shape     # (x_rows, y_columns)
+
+#### Reshape
+    1d_col_matrix = vector.reshape(-1,1)
+
+#### Transpose
+    1d_col_matrix = vector.T
 
 #### Data Type Property
 Every element of a NumPy array must have the same data type
@@ -66,6 +75,28 @@ Boolean arrays (masks) can be used in the index operator to select True elements
 #### Casting Data Types
     vector_as_float = vector.astype(float)
 
+#### Joining NumPy Arrays
+`hstack()`: horizontal concatenation
+
+    vector1 = np.array([1,2])
+    vector2 = np.array([3,4])
+    result = np.hstack((vector1, vector2))
+    result = np.array([1,2,3,4])
+
+`vstack()`: vertical concatenation
+
+    vector1 = np.array([1,2])
+    vector2 = np.array([3,4])
+    result = np.hstack((vector1, vector2))
+    result = [[1,2],[3,4]]
+
+`column_stack()`: Pandas-like column appending
+
+    matrix = np.array([[0,1],[1,0]])
+    vector = np.array([2,3])
+    result = np.column_stack(matrix, vector)
+    result = np.array([[0,1,2],[1,0,3]])
+
 #### Basic Statistics
     vector.sum()
     vector.mean()
@@ -77,6 +108,7 @@ Boolean arrays (masks) can be used in the index operator to select True elements
 
     matrix.sum()        # defaults to row-wise
     matrix.sum(axis=0)  # column-wise
+
 #### More Statistics
 [NumPy Stats Routines](http://docs.scipy.org/doc/numpy/reference/routines.statistics.html)
 
@@ -106,10 +138,12 @@ Random permutation
 
 [See docs for non-uniform distributions](http://docs.scipy.org/doc/numpy-1.10.1/reference/routines.random.html#distributions)
 
-#### Joining NumPy Arrays
-`column_stack()`: Pandas-like column appending
+#### Output to list
+    vector_list = vector.tolist()
+    nested_lists = matrix.tolist()
 
-    matrix = [[0,1],[1,0]]
-    vector = [2,3]
-    result = np.column_stack(matrix, vector)
-    result = [[0,1,2],[1,0,3]]
+#### Linear Algebra
+##### Inverse
+Matrix * Inverse = Identity Matrix
+
+    inverse_matrix = np.linalg.inv(matrix)

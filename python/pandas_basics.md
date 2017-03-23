@@ -16,7 +16,7 @@ In case of encoding error, trying a different encoding
 
     dataframe = pandas.read_csv("file.csv", encoding="iso-8859-1")
 
-[](https://docs.python.org/3/library/codecs.html#standard-encodings)
+[Standard Encodings](https://docs.python.org/3/library/codecs.html#standard-encodings)
 
 Output a DataFrame to CSV file
 
@@ -138,9 +138,9 @@ dataframe.loc[] - get [row,col] by index
     dataframe.loc["row_index", "col_index"]
     dataframe.loc[:, 'col11':'col99']    # slice columns by name
 
-[](http://pandas.pydata.org/pandas-docs/stable/indexing.html)
+[Indexing](http://pandas.pydata.org/pandas-docs/stable/indexing.html)
 
-[](http://pandas.pydata.org/pandas-docs/stable/cookbook.html#cookbook-selection)
+[Selection](http://pandas.pydata.org/pandas-docs/stable/cookbook.html#cookbook-selection)
 
 #### Alternative Selecting Dataframe Columns by Index
     dataframe["col_name"]         # outputs the column matching "col_name"
@@ -162,26 +162,26 @@ Use `.isin` to match against multiple values
     dataframe["new_col_name"] = some_series_object
     dataframe["existing_col_name"] = some_series_object
 
-#### Concatenate Rows / Columns
+#### Concatenate, Merge, Join Rows / Columns
     new_df = pandas.concat([dataframe, other_df_rows])
     new_df = pandas.concat([dataframe, other_df_cols], axis=1)
 
-#### ***WARNING*** about chained indexing
-    dataframe["col1"]["col2"] = something   # will throw an warning
+[Merges & Joins](http://pandas.pydata.org/pandas-docs/stable/merging.html)
 
-    new_df = dataframe["col1"]
-    new_df["col2"] = something              # equivalent, will also throw a warning
+#### *WARNING* - about chained indexing
+    new_df = dataframe[dataframe['col1']] == some_value]
+    new_df.loc[:] = something              # will throw a warning
 
-First, `dateframe["col1"]` initiates a `__getitem__` call that may return a copy of dataframe. Then, `new_df["col2"]` initiates a `__setitem__` call that will try write on what may be a copy, which would not update the original dataframe.
+First, `dataframe[dataframe['col1']]` initiates a `__getitem__` call that may return a copy or slice an index view of the original dataframe. Then, `new_df.loc[:] =` initiates a `__setitem__` call that will try write on what may be a copy, which would not update the original dataframe.
 
-[](http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy)
+[Indexing View vs Copy](http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy)
 
-See section on "Setting With Copy" [](http://tomaugspurger.github.io/modern-1.html)
+See section on [Setting With Copy](http://tomaugspurger.github.io/modern-1.html)
 
-#### Force Copy
-Force copy often fixes the chained indexing problem
+Using a constructor call to create a new object often fixes the chained indexing problem
 
-    new_df = pandas.DataFrame(dataframe)    # call constructor
+    new_df = pandas.DataFrame(dataframe)
+    new_series = pandas.Series(dataframe['col1'])
 
 #### Modifying Values
 Iterates over each element in the series/dataframe

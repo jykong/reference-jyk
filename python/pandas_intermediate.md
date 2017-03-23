@@ -16,6 +16,14 @@ Python-like string manipulation & regex
 
     series_object.str.<string_method>()
 
+Useful examples:
+
+    series_object.str.contains(r'[\d]+')
+    series_object.str.replace(r'[\d]+', '')
+    series_object.str.extract(r'(\d+)')
+    series_object.str.strip()
+    series_boject.str.split(',')
+
 See [docs](http://pandas.pydata.org/pandas-docs/stable/text.html#method-summary) for a full list
 
 #### Split-Apply-Combine: Group By, Aggregate

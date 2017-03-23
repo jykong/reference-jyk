@@ -1,4 +1,4 @@
-### Anaconda Reference
+## Anaconda Reference
 Anaconda allows for multiple Python environments.
 
 This useful for having 3.x.x and 2.x.x installed and switching between them.
@@ -8,9 +8,21 @@ via command line
 
     python -V
 
+### Manage Packages
+Package management occurs in the current environment. Installing or updating a package in one environment has no effect on other environments.
+#### Show packages
+    conda list
+
 #### Update packages
     conda update --all
 
+#### Search for package
+    conda search <package_name>
+
+#### Install package
+    conda install <package_name>
+
+### Manage Environments
 #### List current environments
 [](http://conda.pydata.org/docs/using/envs.html#list-all-environments)
 

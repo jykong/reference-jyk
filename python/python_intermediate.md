@@ -1,5 +1,13 @@
 ### Intermediate Python Reference
 
+Show function documentation
+
+    help(some_func)
+
+Show available methods
+
+    dir(some_object)
+
 #### Modules
     import package_name
     package_name.func()
@@ -162,6 +170,17 @@ Built-in functions can be overwritten
     sum = 42
     sum([1, 1])   # throws Error
 
+#### Argument Tuple
+    arg_tuple = (some_argval1, some_argval2, some_argval3)
+    some_3arg_func(*arg_tuple)
+
+#### Argument Keyword Dictionary
+
+    arg_dict = {'arg1': some_val1, 'arg2': some_val2}
+    some_2arg_func(**arg_dict)
+
+[Python args and kwargs example](http://www.saltycrane.com/blog/2008/01/how-to-use-args-and-kwargs-in-python/)
+
 #### Regular Expressions
     import re
 
@@ -177,6 +196,7 @@ Use `perf_counter()` for user process + system time (incl. sleep). Use `process_
     before = time.process_time()
     # some task
     after = time.process_time()
+
 #### Timestamps
 A Unix timestamp is a simple floating point value, with no explicit mention of day, month, or year. This floating point value represents the number of seconds that have passed since the epoch. The epoch is the first second of the year 1970. So, a timestamp of 0.0 would represent the epoch, and a timestamp of 60.0 would represent one minute after the epoch.
 
@@ -209,6 +229,7 @@ The datetime module has better support for working extensively with dates. With 
     dt.minute
     dt.second
     dt.microsecond
+
 ##### timedelta class
 
     td = datetime.timedelta(<args>)
@@ -221,12 +242,14 @@ Arguments for timedelta include
     seconds
     milliseconds
     microseconds
+
 ##### Using datetime & timedelta objects
 
     today = datetime.datetime.now()
     diff = datetime.timedelta(days = 1)
     yesterday = today - diff
     tomorrow = today + diff
+
 ##### Formatting output
 Format output string
 

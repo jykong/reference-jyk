@@ -1,4 +1,4 @@
-### Spark Python API Reference
+## Spark Python API Reference
 
     from pyspark import SparkContext
     sc = SparkContext("local", "App Name")
@@ -9,17 +9,36 @@ Data is stored as immutable RDDs. They are immutable (cannot be overwritten) for
 #### Lazy Evaluation
 A lot of commands in Spark are done via lazy evaluation. Instead of executing the command immediately, the command is set up and promised for when it is needed. An analogy would be setting up an on-demand assembly line that is only triggered to operate when a product is needed at the end, as opposed to operating every step every time regardless to whether or not the next step needs it.
 
+The Catalyst Optimizer is the engine that schedules evaluation for Spark SQL. [Read more here](https://databricks.com/blog/2015/04/13/deep-dive-into-spark-sqls-catalyst-optimizer.html)
+
+#### Driver vs Executors
+The Driver is the program running on your computer
+
+Executors are workers performing operations on nodes
+
 #### Basics
-    raw_data = sc.textFile("some_text_file")
+    new_rdd = sc.parallelize(range(10))
 
-`raw_data` is now an RDD. `textFile()` is lazy evaluated.
+`new_rdd` is now an RDD. `parallelize()` is lazy evaluated.
 
-    raw_data.take(5)      # returns & prints the first 5 elements
+    new_rdd.take(5)      # returns & prints the first 5 elements
 
-`take` is an action. This causes `textFile()` to evaluate, at least for the first 5 elements.
+`take` is an action. This causes `parallelize()` to evaluate, at least for the first 5 elements.
 
-#### Transformations
-Transformations are lazy evaluated
+##### Inspection
+Display the number of partitions the data is split over
+
+    new_rdd.getNumPartitions()
+
+### RDD Transformations
+Transformations are lazy evaluated. Transformations are performed by the executors.
+
+##### Parallelize
+Import python iterable into an RDD
+
+    new_rdd = sc.parallelize(some_list, numSlices)
+
+2nd positional argument of `parallelize()` specifies the number of slices to divide the RDD into. Slices can be automatically spread across nodes and increase parallelism.
 
 ##### Map
 Operates much like Python map
@@ -32,6 +51,8 @@ Use `.flatMap()` to combine output into one single flat list, instead of nested 
 
     new_rdd = some_rdd.flatMap(some_func)
 
+##### Sample
+
 
 ##### Filter
 Operates much like Python filter
@@ -43,57 +64,57 @@ Does an grouped reduction / aggregation on an array of 2-element tuples. First i
 
     reduced_rdd = some_rdd_of_tuples.reduceByKey(lambda x,y: some_func(x,y))
 
-#### Actions
-##### Take
-Similar to `head()` in Pandas. Returns top n elements.
+#### Sort By
+rdd.sortBy(value_f, False)
+
+### RDD Actions
+Actions involve the driver & executors.
+#### Take
+Similar to `head()` in Pandas. Returns top n elements. Returns as a list of Row objects.
 
     some_rdd.take(n_elements)
 
-##### Count
+#### Count
 Similar to `len()`
 
     some_rdd.count()
 
+#### Cache
+`cache()` is used to tell Spark to persist an RDD (keep it in memory). This can be used to avoid unnecessary re-computation in subsequent actions.
 
-    reduce()
-    saveAsTextFile()
-    collect()
+    some_rdd.cache()
 
-#### PySpark DataFrames
-Pandas-like features for PySpark
+`unpersist()` is used to tell Spark to remove an RDD from memory. This is used to free up memory to prevent Spark from evicting other useful RDDs automatically.
 
-    from pyspark.sql import SQLContext
-    sqlCtx = SQLContext(sc)
-    df = sqlCtx.read.json("some_file.json")
-    df.printSchema()
-    df.show(n_rows)
-    df.describe().show()
+    some_rdd.unpersist()
 
-##### Column Selection
-Column selection is lazy evaluated. Double-bracket `[[]]` and `select()` are equivalent.
+`is_cached` is a boolean property that can be checked to see if an RDD is cached
 
-    df[['col1']]
-    df[['col1', 'col2', 'col3']]
-    df.select('col1', 'col2', 'col3')
+    some_rdd.is_cached
 
-##### Boolean Masking
-Works much like Pandas DataFrames
+#### Broadcast
+`broadcast()` sends an RDD to each partition. Use to optimize performance for frequently referenced data
 
-    filtered_rows = df[boolean_mask]
-    filtered_rows = df[df['col1'] == some_value]
+#### Collect
+Returns all the rows. **WARNING: *Use carefully with large datasets***
 
-##### Output to Pandas
-    pandas_df = df.toPandas()
+    some_rdd.collect()
 
-#### PySpark SQL
-SQL-like features for PySpark.
+#### Count By Key
+Combines reduceByKey() & count(). Ends with collect()
+    some_rdd.countByKey()
 
-    from pyspark.sql import SQLContext
-    sqlCtx = SQLContext(sc)
-    df = sqlCtx.read.json("some_file.json")
-    df.registerTempTable("sql_table_name")
-    print(sqlCtx.tableNames())
+### Running a Spark Application
+    from pyspark import SparkConf, SparkContext
+    conf = SparkConf().setAppName("MyApp")
+    sc = SparkContext(conf=conf)
 
-Use `sql()` on the `SQLContext` object to make SQL queries. Do not include terminating semi-colons, as they will throw errors. SQL queries are lazy evaluated.
+To shut down Spark:
 
-    new_df = sqlCtx.sql("SELECT col1 FROM sql_table_name")
+    sc.stop() or sys.exit(0)
+
+#### Use spark-submit
+    spark-submit sparkapp.py args
+
+### Web UI
+    localhost:4040/jobs
