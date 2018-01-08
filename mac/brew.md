@@ -2,4 +2,5 @@
 
 ### Uninstall all dependencies not depended on by packages
 
-brew deps [FORMULA] | xargs brew remove --ignore-dependencies && brew missing | xargs brew install
+brew tap beeftornado/rmtree
+brew rmtree [FORMULA]
