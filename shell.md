@@ -1,5 +1,6 @@
 ### Shell scripting
 
+#### Batch file processing
 Loop over files in a directory & convert via LAME
 
     for i in *.wav ; do
@@ -8,8 +9,6 @@ Loop over files in a directory & convert via LAME
     echo $b
     lame -V0 "$i" "$b.mp3"
     done
-
----*
 
 #### Environment Variables
 Show current environment variables loaded in session
@@ -25,3 +24,17 @@ Add a environment variable to load in all sessions. There are multiple ways. The
     .profile
     .bashrc (Linux)
     .bash_profile (Mac)
+
+#### Examine and kill processes
+Top processes
+
+	top
+	press 'q' to quit
+
+List matching processes by name
+
+	pgrep -l processNamePattern
+
+Kill matching processes by name
+
+	pkill -f processNamePattern
