@@ -1,11 +1,31 @@
-### Mac Hotkeys Reference
+# Mac Hotkeys Reference
 
-* Quit App `cmd-q`
-* Switch Apps: *right* `cmd-tab`, *left* `cmd-shift-tab`
-* Switch Windows within an App: ``cmd-` ``
-* Minimize Window `cmd-m`
-* Hide Window `cmd-h`
-* Hide All Other Windows `cmd-opt-h`
-* Show Desktop: *toggle* `fn-f11`
-* Show App Hotkeys using [Cheat Sheet](https://www.mediaatelier.com/CheatSheet/):
-`hold cmd`
+## Default
+Via Mac OS
+*  `cmd+q` Quit App
+* `cmd+tab cmd+shift+tab` Switch app focus next / previous
+* ``cmd+` `` Switch window focus within an app 
+* `cmd+m` Minimize window 
+* `cmd+h` Hide window 
+* `cmd+opt+h` Hide all other Windows 
+
+## Custom
+Via Mac OS
+* `ctrl+alt+'` Switch screen one space left 
+* `ctrl+alt+"` Switch screen one space right
+* `ctrl+alt+d` Focus on Dock
+
+Via Size Up App
+* `ctrl+alt+[` Move window one space left
+* `ctrl+alt+]` Move window one space right
+* `ctrl+alt+left` Split window left
+* `ctrl+alt+right` Split window right 
+* `ctrl+alt+up` Split window up
+* `ctrl+alt+down` Split window down
+* `ctrl+alt+m` Maximize window size
+* `ctrl+alt+c` Center window
+
+Via TickTick
+* `ctrl+alt+t` Quick add task
+ 
+
